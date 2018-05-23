@@ -285,44 +285,50 @@ int main(int argc,char** argv){
 	t1=time(NULL);
 	t0=t1;
 
-	printf("Reading edgelist from file %s\n",argv[2]);
+	//printf("Reading edgelist from file %s\n",argv[2]);
 
 	g=readedgelist(argv[2]);
 
 	t2=time(NULL);
-	printf("- Time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+	//printf("- Time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
 	t1=t2;
 
-	printf("Number of nodes = %u\n",g->n);
-	printf("Number of edges = %u\n",g->e);
+	//printf("Number of nodes = %u\n",g->n);
+	//printf("Number of edges = %u\n",g->e);
 
-	printf("Sorting nodes in non-increasing order of degree\n");
+	if (g->n > 1000){
+		printf("-1");
+		return 0;
+	}
+
+	//printf("Sorting nodes in non-increasing order of degree\n");
 	degord(g);
 
-	printf("Building the graph structure\n");
+	//printf("Building the graph structure\n");
 
 	mksparse(g);
 
-	printf("Maximum degree = %u\n",g->md);
+	//printf("Maximum degree = %u\n",g->md);
 
 	t2=time(NULL);
-	printf("- Time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+	//printf("- Time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
 	t1=t2;
 
-	printf("Iterates over all %s-motifs\n",argv[1]);
+	//printf("Iterates over all %s-motifs\n",argv[1]);
 	k=atoi(argv[1]);
 
 	n=kmotif(g, k);
 
-	printf("Number of %u-motifs: %llu\n",k,n);
+	//printf("Number of %u-motifs: %llu\n",k,n);
+	printf("%llu",n);
 
-	t2=time(NULL);
-	printf("- Time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
-	t1=t2;
+	//t2=time(NULL);
+	//printf("- Time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+	//t1=t2;
 
 	freesparse(g);
 
-	printf("- Overall time = %ldh%ldm%lds\n",(t2-t0)/3600,((t2-t0)%3600)/60,((t2-t0)%60));
+	//printf("- Overall time = %ldh%ldm%lds\n",(t2-t0)/3600,((t2-t0)%3600)/60,((t2-t0)%60));
 
 	return 0;
 }
